@@ -20,15 +20,17 @@ Kemudian buka `http://localhost:8080`.
 4. Pada **Build and deployment**, pilih **Deploy from a branch**, branch `main`, folder `/ (root)`, lalu klik **Save**.
 5. Tunggu proses deployment selesai. URL portal akan ditampilkan oleh GitHub Pages.
 
-Menu sidebar sudah menggunakan struktur data-page sehingga halaman baru dapat ditambahkan dengan membuat section `page-*`, lalu menambahkan satu tombol navigasi.
+Menu sidebar menggunakan URL terpisah: `/`, `/materi`, `/tugas`, `/jadwal`, `/diskusi`, dan `/tentang`. Navigasi tetap berjalan tanpa reload dengan `history.pushState`, dan `404.html` menjaga route tersebut dapat dibuka langsung saat dipublikasikan di GitHub Pages.
 
 ## Mode halaman Notion penuh
 
 Gunakan URL berikut untuk langsung membuka Notion dalam tampilan penuh dan tema terang:
 
 ```text
-https://miaauwcorp.github.io/portal-kelas-c/?deadlinetugas
+https://c-class.miaauwcorp.my.id/assignements
 ```
+
+URL lama `?deadlinetugas` otomatis diarahkan ke `/assignements`.
 
 ## Custom domain
 
