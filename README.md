@@ -21,3 +21,11 @@ Kemudian buka `http://localhost:8080`.
 5. Tunggu proses deployment selesai. URL portal akan ditampilkan oleh GitHub Pages.
 
 Menu sidebar sudah menggunakan struktur data-page sehingga halaman baru dapat ditambahkan dengan membuat section `page-*`, lalu menambahkan satu tombol navigasi.
+
+## Mode halaman Notion penuh
+
+Gunakan URL berikut untuk langsung membuka Notion dalam tampilan penuh dan tema terang:
+
+```text
+https://miaauwcorp.github.io/portal-kelas-c/?deadlinetugas
+```

@@ -22,3 +22,15 @@ document.addEventListener('click', (event) => {
 document.getElementById('menuToggle').addEventListener('click', () => { sidebar.classList.add('open'); backdrop.classList.add('show'); });
 backdrop.addEventListener('click', () => { sidebar.classList.remove('open'); backdrop.classList.remove('show'); });
 document.getElementById('year').textContent = new Date().getFullYear();
+
+// Mode khusus deadline tugas: ?deadlinetugas membuka Notion secara penuh.
+const params = new URLSearchParams(window.location.search);
+if (params.has('deadlinetugas')) {
+  document.body.classList.add('notion-focus-mode');
+  const notionFrame = document.querySelector('.notion-card iframe');
+  if (notionFrame) {
+    const notionUrl = new URL(notionFrame.src);
+    notionUrl.searchParams.set('theme', 'light');
+    notionFrame.src = notionUrl.toString();
+  }
+}
