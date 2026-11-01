@@ -38,11 +38,6 @@ function routeFromLocation() {
     openPage('home', { updateUrl: false, focusMode: true, notionSource: notionSources.tugas });
     return;
   }
-  if (window.location.search.includes('notionmenu')) {
-    history.replaceState({ page: 'home' }, '', '/assignments');
-    openPage('home', { updateUrl: false, focusMode: true, notionSource: notionSources.menu });
-    return;
-  }
   const page = routes[path] || 'home';
   openPage(page, { updateUrl: false, focusMode: path === '/assignments', notionSource: path === '/assignments' ? notionSources.tugas : undefined });
 }

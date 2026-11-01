@@ -30,7 +30,7 @@ Klik **Tugas** di sidebar atau gunakan URL berikut untuk langsung membuka Notion
 https://c-class.miaauwcorp.my.id/?deadlinetugas
 ```
 
-URL `?deadlinetugas` otomatis diarahkan ke `/assignments` setelah mode penuh aktif dan tetap memakai embed deadline sebelumnya. Menu lainnya memakai embed sementara `40bf5ba699fa80e5861ff254c4e10558` melalui `?notionmenu`.
+URL `?deadlinetugas` otomatis diarahkan ke `/assignments` setelah mode penuh aktif dan tetap memakai embed deadline sebelumnya. Menu lainnya mempertahankan URL masing-masing dan menampilkan embed sementara `40bf5ba699fa80e5861ff254c4e10558` di halaman menunya.
 
 ## Custom domain
 
