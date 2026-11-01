@@ -39,6 +39,7 @@ function routeFromLocation() {
 }
 
 document.addEventListener('click', (event) => {
+  if (event.target.closest('[data-deadline-mode]')) return;
   const pageButton = event.target.closest('[data-page]');
   if (pageButton) {
     event.preventDefault();
