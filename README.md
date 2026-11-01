@@ -29,3 +29,11 @@ Gunakan URL berikut untuk langsung membuka Notion dalam tampilan penuh dan tema 
 ```text
 https://miaauwcorp.github.io/portal-kelas-c/?deadlinetugas
 ```
+
+## Custom domain
+
+File `CNAME` sudah disiapkan untuk domain:
+
+```text
+c-class.miaauwcorp.my.id
+```
