@@ -559,12 +559,26 @@
 
       <div class="foto-grid">
         ${foto.length
-          ? foto.map((f, i) => `<button class="foto" type="button" data-i="${i}" aria-label="Lihat foto ${i + 1}">${tagGbr(f.fileId, 500, f.keterangan)}</button>`).join('')
+          ? foto.map((f, i) => `<div class="foto-item"><button class="foto" type="button" data-i="${i}" aria-label="Lihat foto ${i + 1}">${tagGbr(f.fileId, 500, f.keterangan)}</button><button class="foto-hapus" type="button" data-foto-id="${esc(f.id)}" aria-label="Hapus foto ${i + 1}">Hapus</button></div>`).join('')
           : kosong('Album ini masih kosong. Tambahkan foto pertama lewat formulir di atas.')}
       </div>`;
 
     $$('.foto').forEach((b) => b.addEventListener('click', () => bukaLb(Number(b.dataset.i))));
+    $$('.foto-hapus').forEach((b) => b.addEventListener('click', () => hapusFoto(id, b.dataset.fotoId)));
     pasangUnggah(id);
+  }
+
+  async function hapusFoto(albumId, fotoId) {
+    const foto = fotoAktif.find((f) => String(f.id) === String(fotoId));
+    if (!foto || !confirm('Hapus foto ini secara permanen?')) return;
+    const kode = K.pakaiKodeUnggah ? (prompt('Masukkan kode kelas untuk menghapus foto:') || '') : '';
+    try {
+      await API.post('deletePhoto', { albumId, fotoId: foto.id, kode });
+      toast('Foto berhasil dihapus.');
+      renderAlbum(albumId);
+    } catch (e) {
+      toast(pesanGalat(e), 'galat');
+    }
   }
 
   function pasangUnggah(albumId) {
