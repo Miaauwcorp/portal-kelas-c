@@ -20,7 +20,7 @@ Kemudian buka `http://localhost:8080`.
 4. Pada **Build and deployment**, pilih **Deploy from a branch**, branch `main`, folder `/ (root)`, lalu klik **Save**.
 5. Tunggu proses deployment selesai. URL portal akan ditampilkan oleh GitHub Pages.
 
-Menu sidebar menggunakan URL terpisah. **Beranda** tetap menuju `/`, sedangkan **Materi**, **Tugas**, **Jadwal**, **Diskusi**, dan **Tentang kelas** membuka mode Notion penuh melalui `?deadlinetugas`, yang kemudian memakai URL kanonis `/assignments`. Navigasi halaman biasa tetap berjalan tanpa reload dengan `history.pushState`, tombol **Kembali ke beranda** tetap menuju `/`, dan `404.html` menjaga route tersebut dapat dibuka langsung saat dipublikasikan di GitHub Pages.
+Menu sidebar menggunakan URL terpisah. **Beranda** menuju `/`, sedangkan **Materi**, **Tugas**, **Jadwal**, **Diskusi**, dan **Tentang kelas** membuka embed Notion masing-masing dalam mode full-screen. Route browser tetap mengikuti menu yang dipilih, dan Tugas juga mendukung URL `?deadlinetugas` dengan kanonis `/assignments`. Semua URL embed dapat diubah terpusat pada object `notionSources` di `script.js`.
 
 ## Mode halaman Notion penuh
 

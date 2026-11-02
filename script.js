@@ -1,30 +1,37 @@
 const pageTitles = { home: 'Beranda', materi: 'Materi', tugas: 'Tugas', jadwal: 'Jadwal', diskusi: 'Diskusi', tentang: 'Tentang kelas' };
 const routes = { '/': 'home', '/materi': 'materi', '/tugas': 'tugas', '/jadwal': 'jadwal', '/diskusi': 'diskusi', '/tentang': 'tentang', '/assignments': 'home' };
 const pageRoutes = { home: '/', materi: '/materi', tugas: '/tugas', jadwal: '/jadwal', diskusi: '/diskusi', tentang: '/tentang' };
+// Ubah URL di object ini untuk mengganti embed Notion pada menu tertentu.
 const notionSources = {
-  menu: 'https://wood-foundation-baf.notion.site/ebd//40bf5ba699fa80e5861ff254c4e10558',
-  tugas: 'https://wood-foundation-baf.notion.site/ebd//3daf5ba699fa806cb66ff580f8eb1589?v=40bf5ba699fa80c585e3000c53ea7793'
+  home: 'https://wood-foundation-baf.notion.site/ebd//40bf5ba699fa80e5861ff254c4e10558',
+  materi: 'https://wood-foundation-baf.notion.site/ebd//40bf5ba699fa80e5861ff254c4e10558',
+  tugas: 'https://wood-foundation-baf.notion.site/ebd//3daf5ba699fa806cb66ff580f8eb1589?v=40bf5ba699fa80c585e3000c53ea7793',
+  jadwal: 'https://wood-foundation-baf.notion.site/ebd//40bf5ba699fa80e5861ff254c4e10558',
+  diskusi: 'https://wood-foundation-baf.notion.site/ebd//40bf5ba699fa80e5861ff254c4e10558',
+  tentang: 'https://wood-foundation-baf.notion.site/ebd//40bf5ba699fa80e5861ff254c4e10558'
 };
 const sidebar = document.getElementById('sidebar');
 const backdrop = document.getElementById('sidebarBackdrop');
 const pageTitle = document.getElementById('pageTitle');
 
-function setFocusMode(enabled, notionSource) {
-  document.body.classList.toggle('notion-focus-mode', enabled);
-  if (!enabled) return;
-  const notionFrame = document.querySelector('.notion-card iframe');
-  if (notionFrame) {
-    const notionUrl = new URL(notionSource || notionFrame.src);
-    notionUrl.searchParams.set('theme', 'light');
-    if (notionFrame.src !== notionUrl.toString()) notionFrame.src = notionUrl.toString();
-  }
+function setPageEmbed(page, notionSource) {
+  const notionFrame = document.querySelector(`#page-${page} .notion-card iframe`);
+  if (!notionFrame || !notionSource) return;
+  const notionUrl = new URL(notionSource);
+  notionUrl.searchParams.set('theme', 'light');
+  if (notionFrame.src !== notionUrl.toString()) notionFrame.src = notionUrl.toString();
 }
 
-function openPage(page, { updateUrl = true, focusMode = false, notionSource } = {}) {
+function setFocusMode(enabled) {
+  document.body.classList.toggle('notion-focus-mode', enabled);
+}
+
+function openPage(page, { updateUrl = true, focusMode = page !== 'home', notionSource = notionSources[page] } = {}) {
   document.querySelectorAll('.page-section').forEach((section) => section.classList.toggle('active', section.id === `page-${page}`));
   document.querySelectorAll('.nav-link').forEach((link) => link.classList.toggle('active', link.dataset.page === page));
   pageTitle.textContent = pageTitles[page] || 'Beranda';
-  setFocusMode(focusMode, notionSource);
+  setPageEmbed(page, notionSource);
+  setFocusMode(focusMode);
   if (updateUrl) history.pushState({ page }, '', pageRoutes[page] || '/');
   sidebar.classList.remove('open');
   backdrop.classList.remove('show');
@@ -39,7 +46,7 @@ function routeFromLocation() {
     return;
   }
   const page = routes[path] || 'home';
-  openPage(page, { updateUrl: false, focusMode: path === '/assignments', notionSource: path === '/assignments' ? notionSources.tugas : undefined });
+  openPage(page, { updateUrl: false, focusMode: path === '/assignments' || page !== 'home', notionSource: path === '/assignments' ? notionSources.tugas : notionSources[page] });
 }
 
 document.addEventListener('click', (event) => {
@@ -47,7 +54,8 @@ document.addEventListener('click', (event) => {
   const pageButton = event.target.closest('[data-page]');
   if (pageButton) {
     event.preventDefault();
-    openPage(pageButton.dataset.page);
+    const page = pageButton.dataset.page;
+    openPage(page, { focusMode: page !== 'home', notionSource: notionSources[page] });
   }
   const scrollButton = event.target.closest('[data-scroll]');
   if (scrollButton) document.getElementById(scrollButton.dataset.scroll)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
