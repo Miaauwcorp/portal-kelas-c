@@ -5,7 +5,7 @@ const pageRoutes = { home: '/', materi: '/materi', tugas: '/tugas', jadwal: '/ja
 const notionSources = {
     home: 'https://wood-foundation-baf.notion.site/ebd//40bf5ba699fa80e5861ff254c4e10558',
     materi: 'https://wood-foundation-baf.notion.site/ebd//40bf5ba699fa80e5861ff254c4e10558',
-    tugas: 'https://wood-foundation-baf.notion.site/ebd//3daf5ba699fa806cb66ff580f8eb1589?v=40bf5ba699fa80c585e3000c53ea7793',
+    tugas: 'https://wood-foundation-baf.notion.site/ebd//40bf5ba699fa80c49560e9e76752482f',
     jadwal: 'https://wood-foundation-baf.notion.site/ebd//40cf5ba699fa80d69bd2e382a1d3f956',
     diskusi: 'https://wood-foundation-baf.notion.site/ebd//40bf5ba699fa80e5861ff254c4e10558',
     tentang: 'https://wood-foundation-baf.notion.site/ebd//40bf5ba699fa80e5861ff254c4e10558'
