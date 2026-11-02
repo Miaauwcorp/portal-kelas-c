@@ -6,7 +6,7 @@ const notionSources = {
     home: 'https://wood-foundation-baf.notion.site/ebd//40bf5ba699fa80e5861ff254c4e10558',
     materi: 'https://wood-foundation-baf.notion.site/ebd//40bf5ba699fa80e5861ff254c4e10558',
     tugas: 'https://wood-foundation-baf.notion.site/ebd//3daf5ba699fa806cb66ff580f8eb1589?v=40bf5ba699fa80c585e3000c53ea7793',
-    jadwal: 'https://wood-foundation-baf.notion.site/ebd//40cf5ba699fa80d69bd2e382a1d3f956',
+    jadwal: 'https://wood-foundation-baf.notion.site/ebd//40bf5ba699fa80e5861ff254c4e10558',
     diskusi: 'https://wood-foundation-baf.notion.site/ebd//40bf5ba699fa80e5861ff254c4e10558',
     tentang: 'https://wood-foundation-baf.notion.site/ebd//40bf5ba699fa80e5861ff254c4e10558'
 };
@@ -58,13 +58,17 @@ document.addEventListener('click', (event) => {
         openPage(page, { focusMode: page !== 'home', notionSource: notionSources[page] });
     }
     const scrollButton = event.target.closest('[data-scroll]');
-    if (scrollButton) document.getElementById(scrollButton.dataset.scroll) ? .scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (scrollButton) document.getElementById(scrollButton.dataset.scroll).scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 
-document.getElementById('menuToggle').addEventListener('click', () => { sidebar.classList.add('open');
-    backdrop.classList.add('show'); });
-backdrop.addEventListener('click', () => { sidebar.classList.remove('open');
-    backdrop.classList.remove('show'); });
+document.getElementById('menuToggle').addEventListener('click', () => {
+    sidebar.classList.add('open');
+    backdrop.classList.add('show');
+});
+backdrop.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    backdrop.classList.remove('show');
+});
 document.getElementById('year').textContent = new Date().getFullYear();
 window.addEventListener('popstate', routeFromLocation);
 routeFromLocation();
