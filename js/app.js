@@ -31,6 +31,7 @@
     tambah: '<path d="M12 5v14M5 12h14"/>',
     unggah: '<path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/>',
     unduh: '<path d="M12 4v12M7 11l5 5 5-5"/><path d="M4 20h16"/>',
+    sampah: '<path d="M4 7h16M10 11v6M14 11v6M9 4h6l1 3H8l1-3zM6 7l1 14h10l1-14"/>',
     tutup: '<path d="M6 6l12 12M18 6 6 18"/>',
     kiri: '<path d="m15 5-7 7 7 7"/>',
     kanan: '<path d="m9 5 7 7-7 7"/>'
@@ -508,6 +509,7 @@
   }
 
   let fotoAktif = [];
+  let albumAktif = '';
 
   async function renderAlbum(id) {
     const n = mulai('galeri');
@@ -526,6 +528,7 @@
     const a = d.album;
     const foto = d.foto || [];
     fotoAktif = foto;
+    albumAktif = id;
     document.title = `${a.nama} | ${NAMA_KELAS}`;
 
     $('#isiAlbum').innerHTML = `
@@ -559,21 +562,21 @@
 
       <div class="foto-grid">
         ${foto.length
-          ? foto.map((f, i) => `<div class="foto-item"><button class="foto" type="button" data-i="${i}" aria-label="Lihat foto ${i + 1}">${tagGbr(f.fileId, 500, f.keterangan)}</button><button class="foto-hapus" type="button" data-foto-id="${esc(f.id)}" aria-label="Hapus foto ${i + 1}">Hapus</button></div>`).join('')
+          ? foto.map((f, i) => `<button class="foto" type="button" data-i="${i}" aria-label="Lihat foto ${i + 1}">${tagGbr(f.fileId, 500, f.keterangan)}</button>`).join('')
           : kosong('Album ini masih kosong. Tambahkan foto pertama lewat formulir di atas.')}
       </div>`;
 
     $$('.foto').forEach((b) => b.addEventListener('click', () => bukaLb(Number(b.dataset.i))));
-    $$('.foto-hapus').forEach((b) => b.addEventListener('click', () => hapusFoto(id, b.dataset.fotoId)));
     pasangUnggah(id);
   }
 
-  async function hapusFoto(albumId, fotoId) {
+  async function hapusFoto(albumId, fotoId, dariLightbox = false) {
     const foto = fotoAktif.find((f) => String(f.id) === String(fotoId));
     if (!foto || !confirm('Hapus foto ini secara permanen?')) return;
     const kode = K.pakaiKodeUnggah ? (prompt('Masukkan kode kelas untuk menghapus foto:') || '') : '';
     try {
       await API.post('deletePhoto', { albumId, fotoId: foto.id, kode });
+      if (dariLightbox) tutupLb();
       toast('Foto berhasil dihapus.');
       renderAlbum(albumId);
     } catch (e) {
@@ -679,6 +682,7 @@
       f.pengunggah ? `<span>Diunggah oleh ${esc(f.pengunggah)}</span>` : ''
     ].join('');
     $('#lbUnduh').href = `https://drive.google.com/uc?export=download&id=${encodeURIComponent(f.fileId)}`;
+    $('#lbHapus').hidden = false;
     const satu = fotoAktif.length < 2;
     $('#lbSebelum').hidden = satu;
     $('#lbBerikut').hidden = satu;
@@ -704,6 +708,10 @@
   }
 
   $('#lbTutup').addEventListener('click', tutupLb);
+  $('#lbHapus').addEventListener('click', () => {
+    const foto = fotoAktif[lbIndeks];
+    if (foto && albumAktif) hapusFoto(albumAktif, foto.id, true);
+  });
   $('#lbSebelum').addEventListener('click', () => geserLb(-1));
   $('#lbBerikut').addEventListener('click', () => geserLb(1));
   lb.addEventListener('click', (e) => { if (e.target === lb || e.target.classList.contains('lb-figur')) tutupLb(); });

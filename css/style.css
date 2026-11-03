@@ -273,15 +273,12 @@ textarea.pendek { min-height: 80px; }
 .pratinjau span { font-size: 14px; color: var(--abu); margin-left: 4px; }
 
 .foto-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; }
-.foto-item { position: relative; min-width: 0; }
 .foto {
   padding: 0; border: 0; cursor: zoom-in; background: #DDE5DF;
   aspect-ratio: 1; border-radius: 8px; overflow: hidden;
 }
 .foto img { width: 100%; height: 100%; object-fit: cover; }
 .foto:hover img { opacity: .9; }
-.foto-hapus { position: absolute; right: 6px; bottom: 6px; z-index: 2; border: 0; border-radius: 7px; padding: 5px 8px; color: #fff; background: #8a3b2acc; font: inherit; font-size: 11px; cursor: pointer; }
-.foto-hapus:hover { background: #8a3b2a; }
 
 /* ---------- Lapisan Notion ---------- */
 .notion { position: fixed; inset: 0; z-index: 100; background: var(--putih); display: flex; flex-direction: column; }
@@ -335,6 +332,13 @@ textarea.pendek { min-height: 80px; }
   color: #fff; font-weight: 600; font-size: 14px; text-decoration: none;
   padding: 8px 12px; border-radius: 10px; background: rgba(255,255,255,.1);
 }
+.lb-hapus {
+  position: absolute; top: 18px; left: 104px;
+  display: inline-flex; align-items: center; gap: 6px;
+  color: #fff; font: inherit; font-weight: 600; font-size: 14px;
+  border: 0; padding: 8px 12px; border-radius: 10px; background: rgba(138,59,42,.8); cursor: pointer;
+}
+.lb-hapus:hover { background: #8A3B2A; }
 
 /* ---------- Toast ---------- */
 .toast {
